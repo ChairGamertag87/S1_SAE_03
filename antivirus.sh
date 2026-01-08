@@ -12,17 +12,20 @@
 CRITERE="" # Stock l'extension du virus
 FICHIER_CRITERE="$1"
 
-usage() {
+function usage () 
+{
     echo $0 "Usage : <chemin du fichier contenant le critère>"
 }
 
-demander_fichier() {
+function demander_fichier () 
+{
     prompt="$1"
     type="$2" # 0 fichier, 1 dossier
     fic=""
 
     # Sécurité
-    if [ "$type" -ne 0 ] && [ "$type" -ne 1 ]; then
+    if [ "$type" -ne 0 ] && [ "$type" -ne 1 ] 
+    then
         echo "Erreur : Type incorrect (0 ou 1 attendu)" >&2
         return 1
     fi
@@ -31,18 +34,21 @@ demander_fichier() {
          # Affiche le prompt mis en paramètre dans l'appel de fonction et va mettre dans la variable fic ce que l'utilisateur va taper
         read -p "$prompt" fic
 
-        if [ "$type" -eq 0 ]; then
+        if [ "$type" -eq 0 ] 
+        then
             # Cas Fichier
-            
+
              # Verifie si le fichier est un fichier ordinaire et si le programme à la permission de le lire
-            if [ -f "$fic" ] && [ -r "$fic" ]; then
+            if [ -f "$fic" ] && [ -r "$fic" ] 
+            then
                 echo "$fic"
                 return 0
             else
                 echo "Erreur : Fichier introuvable ou illisible." >&2
             fi
 
-        elif [ "$type" -eq 1 ]; then
+        elif [ "$type" -eq 1 ] 
+        then
             # Cas Repertoire
             if [ -d "$fic" ] && [ -r "$fic" ]; then
                 echo "$fic"
@@ -55,7 +61,8 @@ demander_fichier() {
 }
 
 
-afficher_contenu() {
+function afficher_contenu () 
+{
 
     #Appel de fonction
     fichier=$(demander_fichier "Fichier à afficher : " 0)
@@ -66,9 +73,9 @@ afficher_contenu() {
 }
 
 
-
-
 # --- CORPS PRINCIPAL ---
+
+verifier_environnement
 
 while true; do
     echo ""
