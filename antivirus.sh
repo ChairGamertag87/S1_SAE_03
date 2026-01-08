@@ -17,6 +17,32 @@ function usage ()
     echo $0 "Usage : <chemin du fichier contenant le critère>"
 }
 
+function verifier_environnement ()
+{
+    if [ -z "$FICHIER_CRITERE" ]
+    then
+        echo "Erreur : Argument manquant." >&2 
+        usage
+        exit 1
+    fi
+
+    if [ ! -f "$CRITERE_FILE" ] || [ ! -r "$CRITERE_FILE" ]
+    then
+        echo "Erreur : Le fichier '$CRITERE_FILE' est introuvable ou illisible." >&2
+        exit 2
+    fi
+
+    CRITERE=$(cat "$CRITERE_FILE" | tr -d '[:space:]')
+    
+    if [ -z "$CRITERE" ] 
+    then
+        echo "Erreur : Le fichier critère est vide." >&2
+        exit 1
+    fi
+
+
+}
+
 function demander_fichier () 
 {
     prompt="$1"
