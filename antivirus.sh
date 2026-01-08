@@ -86,6 +86,17 @@ function demander_fichier ()
     done
 }
 
+chercher_virus () {
+    echo ""
+    chemin=$(demander_fichier "Veuillez choisir le chemin du répertoire (relatif ou absolu) :")
+    echo ""
+    echo "Votre chemin :" $chemin
+    ls $chemin | find -name *.sha > historique.txt
+    echo ""
+    echo "Voici les virus détectés au répertoire :" $chemin
+    cat historique.txt
+}
+
 
 function afficher_contenu () 
 {
