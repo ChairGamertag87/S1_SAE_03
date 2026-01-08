@@ -8,17 +8,41 @@
 # Paramètres    : $1 = chemin du fichier contenant le critère (ex: .sha)
 # Codes retour  : 0 (Succès), 1 (Erreur argument), 2 (Fichier introuvable)
 # ==============================================================================
-EXTENSION=""
-FICHIER="$1"
+CRITERE="$1"
 
 usage() {
     echo $0 "Usage : <chemin du fichier contenant le critère>"
 }
 
-afficher_contenu () {
-    cat "$FICHIER"
+demander_fichier() {
+    prompt="$1"
+    fic=""
+    while true; do
+
+        # Affiche le prompt mis en paramètre dans l'appel de fonction et va mettre dans la variable fic ce que l'utilisateur va taper
+        read -p "$prompt" fic
+
+        # Verifie si le fichier est un fichier ordinaire et si le programme à la permission de le lire
+        if [ -f "$fic" ] && [ -r "$fic" ]; then
+            echo "$fic"
+            return 0
+        else
+            echo "Erreur : Fichier introuvable ou illisible. Réessayez." >&2
+        fi
+    done
+}
+
+afficher_contenu() {
+    
+    #Appel de fonction
+    fichier=$(demander_fichier "Fichier à afficher : ")*
+
+    echo "--- Fichier : $fichier ---"
+    cat "$fichier"
     return 0
 }
+
+
 
 
 # --- CORPS PRINCIPAL ---
