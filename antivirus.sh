@@ -86,7 +86,8 @@
         done
     }
 
-    chercher_virus () {
+    function chercher_virus () 
+    {
         echo ""
         chemin=$(demander_fichier "Veuillez choisir le chemin du répertoire (relatif ou absolu) :")
         echo ""
@@ -125,27 +126,30 @@
         fi
     }
 
-    afficher_contenu () {
+    function afficher_contenu () 
+    {
     fichier=$(demander_fichier "Quel fichier voulez vous visualiser ? " 0)
     echo ""
     echo "Voici le contenu de $fichier :"
     echo ""
     cat $fichier
-}
+    }
 
-historique () {
-    echo ""
-    echo "Voici l'historique des fichiers corrompus :"
-    echo ""
-    cat historique.txt
-}
+    function historique () 
+    {
+        echo ""
+        echo "Voici l'historique des fichiers corrompus :"
+        echo ""
+        cat historique.txt
+    }
 
-compter_virus () {
-    echo ""
-    echo "Voici le nombre de virus que vous avez sur votre appareil : "
-    echo ""
-    cat historique.txt | wc -l
-}
+    function compter_virus () 
+    {
+        echo ""
+        echo "Voici le nombre de virus que vous avez sur votre appareil : "
+        echo ""
+        cat historique.txt | wc -l
+    }   
 
 
     # --- CORPS PRINCIPAL ---
