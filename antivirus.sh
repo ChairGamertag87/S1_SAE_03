@@ -112,19 +112,19 @@
 
     function afficher_lignes () {
         echo ""
-        fich=$(demander_fichier "Quel fichier voulez vous afficher  ? " 0)
+        fich=$(demander_fichier "Quel fichier voulez vous afficher ? " 0)
         echo ""
         read -p "Combien de lignes voulez vous lire ? " nb_lignes
-        if [ "$2" = head ]
-        then
-            head -n "nb_lignes" "$fich" 
+        if [ "$1" = "head" ]; then
+            echo "Voici les $nb_lignes premières lignes de $fich :"
+            head -n "$nb_lignes" "$fich"
             return 0
-        elif [ "$2" = tail ]
-            then
-            tail -n nb_lignes "$fich"
+        elif [ "$1" = "tail" ]; then
+            echo "Voici les $nb_lignes dernières lignes de $fich :"
+            tail -n "$nb_lignes" "$fich"
             return 0
         fi
-    }
+}
 
     function afficher_contenu () 
     {
