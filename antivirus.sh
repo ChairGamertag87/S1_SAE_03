@@ -12,6 +12,7 @@
     CRITERE="" # Stock l'extension du virus
     FICHIER_CRITERE="$1"
 
+
     function usage () 
     {
         echo $0 "Usage : <chemin du fichier contenant le critère>"
@@ -89,10 +90,10 @@
     function chercher_virus () 
     {
         echo ""
-        chemin=$(demander_fichier "Veuillez choisir le chemin du répertoire (relatif ou absolu) :")
+        chemin=$(demander_fichier "Veuillez choisir le chemin du répertoire (relatif ou absolu) : " 1)
         echo ""
         echo "Votre chemin :" $chemin
-        ls $chemin | find -name *.sha > historique.txt
+        ls $chemin | find -name *$CRITERE > historique.txt
         echo ""
         echo "Voici les virus détectés au répertoire :" $chemin
         cat historique.txt
