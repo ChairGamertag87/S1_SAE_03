@@ -182,6 +182,30 @@
         cat historique.txt | wc -l
     }   
 
+    function deplacer_virus ()
+    {
+        src=$(demander_fichier "Dossier source : " 1)
+        dest=$(demander_fichier "Dossier destination : " 1)
+        if [ ! -w $dest ]
+        then
+            echo "Erreur : Pas de droits d'écriture dans $dest."
+            return 1
+        fi
+
+        echo "Déplacement en cours..."
+        count=0
+        find "$src" -type f -name "*$CRITERE" | while read -r file; do
+            mv "$file" "$dest/"
+            if [ $? -eq 0 ]
+            then
+                echo "OK : $file déplacé."
+            else
+                echo "KO : Erreur déplacement $file."
+            fi
+        done
+        return 0
+    }
+
 
     # --- CORPS PRINCIPAL ---
 
