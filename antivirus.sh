@@ -12,12 +12,20 @@
     CRITERE="" # Stock l'extension du virus
     FICHIER_CRITERE="$1"
 
-
+    # Fonction : usage
+    # Description : Affiche le message d'utilisation du script
+    # Paramètres  : Aucun
+    # Retour      : Aucun
     function usage () 
     {
         echo $0 "Usage : <chemin du fichier contenant le critère>"
     }
 
+    # Fonction : verifier_environnement
+    # Description : Vérifie que l'argument du script est valide et charge le critère
+    # Paramètres  : Aucun
+    # Variables globales : $FICHIER_CRITERE (lecture), $CRITERE (écriture)
+    # Codes retour : 1 (Erreur argument ou fichier vide), 2 (Fichier introuvable)
     function verifier_environnement ()
     {
         if [ -z "$FICHIER_CRITERE" ]
@@ -44,6 +52,12 @@
 
     }
 
+    # Fonction : demander_fichier
+    # Description : Demande à l'utilisateur un chemin de fichier ou dossier valide
+    # Paramètres  : $1 = Prompt à afficher (string)
+    #               $2 = Type attendu : 0 pour fichier, 1 pour dossier (entier)
+    # Retour      : Affiche le chemin valide via echo
+    # Codes retour : 0 (Succès), 1 (Type incorrect)
     function demander_fichier () 
     {
         prompt="$1"
@@ -87,7 +101,13 @@
         done
     }
 
-    function chercher_virus () 
+    # Fonction : chercher_virus
+    # Description : Cherche tous les fichiers correspondant au critère dans un répertoire
+    # Paramètres  : Aucun
+    # Variables globales : $CRITERE (lecture)
+    # Effet de bord : Crée/écrase le fichier historique.txt
+    # Retour      : Aucun
+    function chercher_virus ()
     {
         echo ""
         chemin=$(demander_fichier "Veuillez choisir le chemin du répertoire (relatif ou absolu) : " 1)
@@ -97,9 +117,13 @@
         echo ""
         echo "Voici les virus détectés au répertoire :" $chemin
         cat historique.txt
+        return 0
     }
 
-
+    # Fonction : afficher_contenu
+    # Description : Affiche le contenu complet d'un fichier
+    # Paramètres  : Aucun
+    # Retour      : Code retour 0
     function afficher_contenu () 
     {
 
@@ -111,7 +135,12 @@
         return 0
     }
 
-    function afficher_lignes () {
+    # Fonction : afficher_lignes
+    # Description : Affiche X premières ou dernières lignes d'un fichier
+    # Paramètres  : $1 = Mode : "head" (début) ou "tail" (fin) (string)
+    # Retour      : Code retour 0 (succès)
+    function afficher_lignes () 
+    {
         echo ""
         fich=$(demander_fichier "Quel fichier voulez vous afficher ? " 0)
         echo ""
@@ -125,17 +154,13 @@
             tail -n "$nb_lignes" "$fich"
             return 0
         fi
-}
-
-    function afficher_contenu () 
-    {
-    fichier=$(demander_fichier "Quel fichier voulez vous visualiser ? " 0)
-    echo ""
-    echo "Voici le contenu de $fichier :"
-    echo ""
-    cat $fichier
     }
 
+    # Fonction : historique
+    # Description : Affiche le contenu du fichier historique.txt
+    # Paramètres  : Aucun
+    # Effet de bord : Lit le fichier historique.txt
+    # Retour      : Aucun
     function historique () 
     {
         echo ""
@@ -144,6 +169,11 @@
         cat historique.txt
     }
 
+    # Fonction : compter_virus
+    # Description : Compte et affiche le nombre de lignes dans historique.txt
+    # Paramètres  : Aucun
+    # Effet de bord : Lit le fichier historique.txt
+    # Retour      : Aucun   
     function compter_virus () 
     {
         echo ""
